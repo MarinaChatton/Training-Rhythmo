@@ -8,13 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/colorDark">
 
     <com.lukedeighton.wheelview.WheelView
         android:id="@+id/wheelview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:wheelColor="@color/colorPrimary"
+        app:wheelColor="@color/colorElectricBlue"
         app:rotatableWheelDrawable="false"
         app:selectionAngle="90.0"
         app:wheelRadius="match_parent"/>
