@@ -18,7 +18,8 @@
         app:wheelColor="@color/colorElectricBlue"
         app:rotatableWheelDrawable="false"
         app:selectionAngle="90.0"
-        app:wheelRadius="match_parent"/>
+        app:wheelRadius="match_parent"
+        android:clickable="true"/>
 
     <LinearLayout
         android:layout_width="200dp"
@@ -26,7 +27,8 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@drawable/circle">
+        android:background="@drawable/circle"
+        android:clickable="true">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
