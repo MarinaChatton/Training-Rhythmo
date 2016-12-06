@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chatton.marina.rhythmo.metronome.Metronome;
+import com.chatton.marina.rhythmo.metronome.MetronomeAsyncTask;
 import com.lukedeighton.wheelview.WheelView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener {
+    private final static String IS_PLAYING_KEY = "isPlayingKey";
+
     //views
     WheelView wheelView;
     TextView rpmDisplay;
@@ -23,16 +27,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton onOffButton;
 
     //metronome
-    Metronome metronome;
+    MetronomeAsyncTask metronomeAsyncTask;
     boolean isPlaying = false;
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        isPlaying = savedInstanceState.getBoolean(IS_PLAYING_KEY);
+        Log.e("PLAY", String.valueOf(isPlaying));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(IS_PLAYING_KEY, isPlaying);
+        Log.e("PLAY", String.valueOf(isPlaying));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        metronome = new Metronome();
 
         wheelView = (WheelView) findViewById(R.id.wheelview);
         wheelView.setOnWheelAngleChangeListener(this);
@@ -42,6 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         onOffButton = (FloatingActionButton) findViewById(R.id.on_off_button);
         onOffButton.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setOnOffButtonColors(isPlaying);
     }
 
@@ -63,10 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(isPlaying){
-            //metronome.stop();
+            metronomeAsyncTask.stop();
             isPlaying = false;
         }else{
-            //metronome.play();
+            metronomeAsyncTask = new MetronomeAsyncTask();
+            metronomeAsyncTask.execute();
             isPlaying = true;
         }
         setOnOffButtonColors(isPlaying);
