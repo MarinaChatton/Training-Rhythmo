@@ -9,20 +9,20 @@ import com.lukedeighton.wheelview.WheelView;
 
 public class MainActivity extends AppCompatActivity {
     WheelView wheelView;
-    TextView angleDisplay;
+    TextView rpmDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        angleDisplay = (TextView) findViewById(R.id.angle);
+        rpmDisplay = (TextView) findViewById(R.id.display_rpm);
 
         wheelView = (WheelView) findViewById(R.id.wheelview);
         wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
             @Override
             public void onWheelAngleChange(float angle) {
-                angleDisplay.setText(String.valueOf(angle));
+                rpmDisplay.setText(String.valueOf(angle));
             }
         });
     }
