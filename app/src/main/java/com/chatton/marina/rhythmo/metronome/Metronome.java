@@ -11,8 +11,7 @@ import com.chatton.marina.rhythmo.metronome.AudioGenerator;
 public class Metronome {
 
     private double bpm = 80;
-    private int beat = 1;
-    private int noteValue = 1;
+    private int beat = 2;
     private int silence = 1;
 
     private double beatSound = 2440;
@@ -83,14 +82,6 @@ public class Metronome {
 
     public void setBeat(int beat) {
         this.beat = beat;
-    }
-
-    public int getNoteValue() {
-        return noteValue;
-    }
-
-    public void setNoteValue(int noteValue) {
-        this.noteValue = noteValue;
     }
 
     public int getSilence() {

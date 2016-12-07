@@ -1,6 +1,7 @@
 package com.chatton.marina.rhythmo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final static String IS_PLAYING_KEY = "isPlayingKey";
     private final static String DEFAULT_BPM_KEY = "defaultBmpKey";
 
+    SharedPreferences sharedPreferences;
+
     private int defaultBpm = 80;
 
     //views
@@ -32,26 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //metronome
     MetronomeAsyncTask metronomeAsyncTask;
     boolean isPlaying = false;
-    int bpm;
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        isPlaying = savedInstanceState.getBoolean(IS_PLAYING_KEY, false);
-        defaultBpm = savedInstanceState.getInt(DEFAULT_BPM_KEY, 80);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean(IS_PLAYING_KEY, isPlaying);
-        savedInstanceState.putInt(DEFAULT_BPM_KEY, bpm);
-    }
+    int bpm = defaultBpm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getPreferences(MODE_PRIVATE);
 
         wheelView = (WheelView) findViewById(R.id.wheelview);
         wheelView.setOnWheelAngleChangeListener(this);
@@ -65,12 +56,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        //load preferences values
+        isPlaying = sharedPreferences.getBoolean(IS_PLAYING_KEY, false);
+        defaultBpm = sharedPreferences.getInt(DEFAULT_BPM_KEY, 80);
+        bpm = defaultBpm;
 
         rpmDisplay.setText(String.valueOf(defaultBpm));
         setOnOffButtonColors(isPlaying);
-        bpm = defaultBpm;
+    }
+
+    @Override
+    protected void onStop() {
+        //save preferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_PLAYING_KEY, isPlaying);
+        editor.putInt(DEFAULT_BPM_KEY, bpm);
+        editor.commit();
+
+        super.onStop();
     }
 
     private void setOnOffButtonColors(boolean isPlaying){
