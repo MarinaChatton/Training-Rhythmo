@@ -19,7 +19,6 @@ import com.chatton.marina.rhythmo.metronome.MetronomeAsyncTask;
 import com.lukedeighton.wheelview.WheelView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener {
-    private final static String IS_PLAYING_KEY = "isPlayingKey";
     private final static String DEFAULT_BPM_KEY = "defaultBmpKey";
 
     SharedPreferences sharedPreferences;
@@ -53,25 +52,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         onOffButton = (FloatingActionButton) findViewById(R.id.on_off_button);
         onOffButton.setOnClickListener(this);
+        setOnOffButtonColors(isPlaying);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //load preferences values
-        isPlaying = sharedPreferences.getBoolean(IS_PLAYING_KEY, false);
         defaultBpm = sharedPreferences.getInt(DEFAULT_BPM_KEY, 80);
         bpm = defaultBpm;
 
         rpmDisplay.setText(String.valueOf(defaultBpm));
-        setOnOffButtonColors(isPlaying);
     }
 
     @Override
     protected void onStop() {
         //save preferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(IS_PLAYING_KEY, isPlaying);
         editor.putInt(DEFAULT_BPM_KEY, bpm);
         editor.commit();
 

@@ -11,7 +11,7 @@ import com.chatton.marina.rhythmo.metronome.AudioGenerator;
 public class Metronome {
 
     private double bpm = 80;
-    private int beat = 2;
+    private int beat = 1;
     private int silence = 1;
 
     private double beatSound = 2440;
