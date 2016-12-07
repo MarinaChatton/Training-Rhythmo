@@ -19,7 +19,7 @@ import com.lukedeighton.wheelview.WheelView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener {
     private final static String IS_PLAYING_KEY = "isPlayingKey";
-    private final static String BPM_KEY = "bmpKey";
+    private final static String DEFAULT_BPM_KEY = "defaultBmpKey";
 
     private int defaultBpm = 80;
 
@@ -32,18 +32,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //metronome
     MetronomeAsyncTask metronomeAsyncTask;
     boolean isPlaying = false;
-    int bpm = defaultBpm;
+    int bpm;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        isPlaying = savedInstanceState.getBoolean(IS_PLAYING_KEY);
+        isPlaying = savedInstanceState.getBoolean(IS_PLAYING_KEY, false);
+        defaultBpm = savedInstanceState.getInt(DEFAULT_BPM_KEY, 80);
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean(IS_PLAYING_KEY, isPlaying);
+        savedInstanceState.putInt(DEFAULT_BPM_KEY, bpm);
     }
 
     @Override
@@ -55,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wheelView.setOnWheelAngleChangeListener(this);
 
         rpmDisplay = (TextView) findViewById(R.id.display_rpm);
-        rpmDisplay.setText(String.valueOf(bpm));
 
         speedDisplay = (TextView) findViewById(R.id.display_speed);
 
@@ -66,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+
+        rpmDisplay.setText(String.valueOf(defaultBpm));
         setOnOffButtonColors(isPlaying);
+        bpm = defaultBpm;
     }
 
     private void setOnOffButtonColors(boolean isPlaying){
