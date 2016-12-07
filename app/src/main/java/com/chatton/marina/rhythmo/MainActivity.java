@@ -101,10 +101,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //onWheelviewAngleChangeListener
     @Override
     public void onWheelAngleChange(float angle) {
-        bpm = defaultBpm + (int)(angle/45)*5;
+        bpm = calculateBpm(angle);
         rpmDisplay.setText(String.valueOf(bpm));
         if(metronomeAsyncTask!=null) {
             metronomeAsyncTask.setBPM(bpm);
+        }
+    }
+
+
+    public int calculateBpm(float angle){
+        int bpm = defaultBpm + (int)(angle/45)*5;//add 5 bmp each 45°
+        if(bpm>=0){
+            return bpm;
+        }else{
+            return 0;
         }
     }
 }
