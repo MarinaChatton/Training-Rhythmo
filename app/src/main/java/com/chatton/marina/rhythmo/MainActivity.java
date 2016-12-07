@@ -19,6 +19,9 @@ import com.lukedeighton.wheelview.WheelView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener {
     private final static String IS_PLAYING_KEY = "isPlayingKey";
+    private final static String BPM_KEY = "bmpKey";
+
+    private int defaultBpm = 80;
 
     //views
     WheelView wheelView;
@@ -29,19 +32,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //metronome
     MetronomeAsyncTask metronomeAsyncTask;
     boolean isPlaying = false;
+    int bpm = defaultBpm;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         isPlaying = savedInstanceState.getBoolean(IS_PLAYING_KEY);
-        Log.e("PLAY", String.valueOf(isPlaying));
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean(IS_PLAYING_KEY, isPlaying);
-        Log.e("PLAY", String.valueOf(isPlaying));
     }
 
     @Override
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wheelView.setOnWheelAngleChangeListener(this);
 
         rpmDisplay = (TextView) findViewById(R.id.display_rpm);
+        rpmDisplay.setText(String.valueOf(bpm));
+
         speedDisplay = (TextView) findViewById(R.id.display_speed);
 
         onOffButton = (FloatingActionButton) findViewById(R.id.on_off_button);
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             metronomeAsyncTask = new MetronomeAsyncTask();
             metronomeAsyncTask.execute();
+            metronomeAsyncTask.setBPM(bpm);
             isPlaying = true;
         }
         setOnOffButtonColors(isPlaying);
@@ -96,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //onWheelviewAngleChangeListener
     @Override
     public void onWheelAngleChange(float angle) {
-        rpmDisplay.setText(String.valueOf(angle));
+        bpm = defaultBpm + (int)(angle/45)*5;
+        rpmDisplay.setText(String.valueOf(bpm));
+        if(metronomeAsyncTask!=null) {
+            metronomeAsyncTask.setBPM(bpm);
+        }
     }
 }

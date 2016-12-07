@@ -23,4 +23,11 @@ public class MetronomeAsyncTask extends AsyncTask {
         metronome.stop();
         metronome = null;
     }
+
+    public void setBPM(double bpm){
+        if(metronome!=null) {
+            metronome.setBpm(bpm);
+            metronome.calcSilence();
+        }
+    }
 }
