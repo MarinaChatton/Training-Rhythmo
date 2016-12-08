@@ -1,31 +1,22 @@
 package com.chatton.marina.rhythmo;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.location.Location;
-import android.media.AudioManager;
-import android.os.AsyncTask;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.chatton.marina.rhythmo.metronome.Metronome;
 import com.chatton.marina.rhythmo.metronome.MetronomeAsyncTask;
 import com.lukedeighton.wheelview.WheelView;
 import com.mindandgo.locationdroid.LocationDroid;
-import com.xavierbauquet.theo.Theo;
-import com.xavierbauquet.theo.annotations.location.AccessCoarseLocation;
 import com.xavierbauquet.theo.annotations.location.AccessFineLocation;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -83,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStop() {
-        if(locationDroid!=null){
+        if (locationDroid != null) {
             locationDroid.stop();
         }
 
@@ -116,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             metronomeAsyncTask.stop();
             isPlaying = false;
 
-            if(locationDroid!=null){
+            if (locationDroid != null) {
                 locationDroid.stop();
                 setSpeedDisplay(NO_SPEED);
             }
@@ -156,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        //check if GPS is activated
+        
+        //TODO: check if GPS is activated
+
         locationDroid = new LocationDroid(this) {
             @Override
             public void onNewLocation(Location location) {
@@ -179,14 +172,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        try{
+        try {
             locationDroid.start();
-        }catch (SecurityException s) {
+        } catch (SecurityException s) {
             Log.e("Permissions Error", s.toString());
         }
     }
 
-    private void setSpeedDisplay(String speed){
+    private void setSpeedDisplay(String speed) {
         String speedDisplayText = String.format(getResources().getString(R.string.speed_display), speed);
         speedDisplay.setText(speedDisplayText);
     }

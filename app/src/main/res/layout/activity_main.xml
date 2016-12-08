@@ -4,52 +4,56 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/colorDark"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:layout_gravity="center"
-    android:background="@color/colorDark">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <com.lukedeighton.wheelview.WheelView
         android:id="@+id/wheelview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:wheelColor="@color/colorElectricBlue"
+        android:clickable="true"
         app:rotatableWheelDrawable="false"
         app:selectionAngle="90.0"
-        app:wheelRadius="match_parent"
-        android:clickable="true"/>
+        app:wheelColor="@color/colorElectricBlue"
+        app:wheelRadius="match_parent" />
 
     <LinearLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center"
         android:background="@drawable/circle"
-        android:clickable="true">
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RPM"/>
+            android:text="RPM" />
+
         <TextView
             android:id="@+id/display_rpm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"/>
+            android:text="0" />
+
         <TextView
             android:id="@+id/display_speed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/on_off_button"
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="normal"
+            android:layout_marginTop="20dp"
             android:scaleType="center"
-            android:src="@drawable/ic_start"/>
+            android:src="@drawable/ic_start"
+            app:fabSize="normal" />
     </LinearLayout>
 
 </FrameLayout>
