@@ -42,7 +42,7 @@
             android:id="@+id/display_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 KmH"/>
+            android:text="@string/speed_display_default"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/on_off_button"
             android:layout_marginTop="20dp"
