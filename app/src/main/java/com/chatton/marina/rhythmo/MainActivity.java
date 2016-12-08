@@ -30,6 +30,7 @@ import com.xavierbauquet.theo.annotations.location.AccessFineLocation;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, WheelView.OnWheelAngleChangeListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private final static String DEFAULT_BPM_KEY = "defaultBmpKey";
+    private final static String NO_SPEED = "--";
 
     SharedPreferences sharedPreferences;
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rpmDisplay = (TextView) findViewById(R.id.display_rpm);
 
         speedDisplay = (TextView) findViewById(R.id.display_speed);
+        setSpeedDisplay(NO_SPEED);
 
         onOffButton = (FloatingActionButton) findViewById(R.id.on_off_button);
         onOffButton.setOnClickListener(this);
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if(locationDroid!=null){
                 locationDroid.stop();
-                speedDisplay.setText(getResources().getString(R.string.speed_display_default));
+                setSpeedDisplay(NO_SPEED);
             }
         } else {
             metronomeAsyncTask = new MetronomeAsyncTask();
@@ -152,14 +154,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @AccessFineLocation
     private void location() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         //check if GPS is activated
         locationDroid = new LocationDroid(this) {
             @Override
             public void onNewLocation(Location location) {
-                speedDisplay.setText(location.getSpeed()+" "+getResources().getString(R.string.speed_unit));
+                setSpeedDisplay(String.valueOf(location.getSpeed()));
             }
 
             @Override
@@ -183,5 +184,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (SecurityException s) {
             Log.e("Permissions Error", s.toString());
         }
+    }
+
+    private void setSpeedDisplay(String speed){
+        String speedDisplayText = String.format(getResources().getString(R.string.speed_display), speed);
+        speedDisplay.setText(speedDisplayText);
     }
 }

@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Rhythmo</string>
-    <string name="speed_unit">KmH</string>
-    <string name="speed_display_default">-- KmH</string>
+    <string name="speed_display">%1$s KmH</string>
 </resources>
