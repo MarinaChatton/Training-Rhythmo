@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.chatton.marina.rhythmo.metronome.MetronomeAsyncTask;
+import com.chatton.marina.metronomelibrary.MetronomeAsyncTask;
 import com.lukedeighton.wheelview.WheelView;
 import com.mindandgo.locationdroid.LocationDroid;
 import com.xavierbauquet.theo.annotations.location.AccessFineLocation;

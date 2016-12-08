@@ -1,4 +1,4 @@
-package com.chatton.marina.rhythmo.metronome;
+package com.chatton.marina.metronomelibrary;
 
 /**
  * https://github.com/MasterEx/BeatKeeper
