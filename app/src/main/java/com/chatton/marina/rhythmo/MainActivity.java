@@ -74,9 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStop() {
-        if (locationDroid != null) {
-            locationDroid.stop();
-        }
+        stopLocation();
 
         //save preferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -107,17 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             metronomeAsyncTask.stop();
             isPlaying = false;
 
-            if (locationDroid != null) {
-                locationDroid.stop();
-                setSpeedDisplay(NO_SPEED);
-            }
+            stopLocation();
         } else {
             metronomeAsyncTask = new MetronomeAsyncTask();
             metronomeAsyncTask.execute();
             metronomeAsyncTask.setBPM(bpm);
             isPlaying = true;
 
-            location();
+            startLocation();
         }
         setOnOffButtonColors(isPlaying);
     }
@@ -143,12 +138,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @AccessFineLocation
-    private void location() {
+    private void startLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        
-        //TODO: check if GPS is activated
 
         locationDroid = new LocationDroid(this) {
             @Override
@@ -176,6 +169,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             locationDroid.start();
         } catch (SecurityException s) {
             Log.e("Permissions Error", s.toString());
+        }
+    }
+
+    private void stopLocation(){
+        if (locationDroid != null) {
+            locationDroid.stop();
+            setSpeedDisplay(NO_SPEED);
         }
     }
 
