@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,9 +15,8 @@ import com.lukedeighton.wheelview.WheelView;
 public class MainActivity extends Activity {
     private int defaultBpm = 80;
 
-
-    WheelView wheelView;TextView rpmDisplay;
-    TextView speedDisplay;
+    WheelView wheelView;
+    TextView rpmDisplay;
     ImageButton onOffButton;
 
     //metronome
@@ -34,40 +32,52 @@ public class MainActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                wheelView = (WheelView) findViewById(R.id.wheelview);
-                wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
-                    @Override
-                    public void onWheelAngleChange(float angle) {
-                        bpm = calculateBpm(angle);
-                        rpmDisplay.setText(String.valueOf(bpm));
-                        if (metronomeAsyncTask != null) {
-                            metronomeAsyncTask.setBPM(bpm);
-                        }
-                    }
-                });
+                initWheelview();
 
-                rpmDisplay = (TextView) findViewById(R.id.display_rpm);
+                initRpmDisplay();
+
+                initOnOffButton();
+            }
+        });
+    }
+
+    public void initWheelview() {
+        wheelView = (WheelView) findViewById(R.id.wheelview);
+        wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
+            @Override
+            public void onWheelAngleChange(float angle) {
+                bpm = calculateBpm(angle);
                 rpmDisplay.setText(String.valueOf(bpm));
+                if (metronomeAsyncTask != null) {
+                    metronomeAsyncTask.setBPM(bpm);
+                }
+            }
+        });
+    }
 
-                onOffButton = (ImageButton) findViewById(R.id.on_off_button);
-                onOffButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isPlaying) {
-                            metronomeAsyncTask.stop();
-                            isPlaying = false;
-                        } else {
-                            metronomeAsyncTask = new MetronomeAsyncTask();
-                            metronomeAsyncTask.execute();
-                            metronomeAsyncTask.setBPM(bpm);
-                            isPlaying = true;
-                        }
-                        setOnOffButtonColors(isPlaying);
-                    }
-                });
+    public void initRpmDisplay() {
+        rpmDisplay = (TextView) findViewById(R.id.display_rpm);
+        rpmDisplay.setText(String.valueOf(bpm));
+    }
+
+    public void initOnOffButton() {
+        onOffButton = (ImageButton) findViewById(R.id.on_off_button);
+        onOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPlaying) {
+                    metronomeAsyncTask.stop();
+                    isPlaying = false;
+                } else {
+                    metronomeAsyncTask = new MetronomeAsyncTask();
+                    metronomeAsyncTask.execute();
+                    metronomeAsyncTask.setBPM(bpm);
+                    isPlaying = true;
+                }
                 setOnOffButtonColors(isPlaying);
             }
         });
+        setOnOffButtonColors(isPlaying);
     }
 
     public int calculateBpm(float angle) {
