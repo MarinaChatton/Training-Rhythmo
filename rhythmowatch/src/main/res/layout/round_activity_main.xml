@@ -46,13 +46,14 @@
             android:textColor="@android:color/holo_blue_bright"
             android:shadowColor="@android:color/holo_blue_bright"
             android:shadowRadius="7"
+            android:textSize="40sp"
             android:textAlignment="center"/>
 
         <ImageButton
             android:id="@+id/on_off_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:scaleType="center"
             android:src="@drawable/ic_start"
             android:background="@drawable/circle"
