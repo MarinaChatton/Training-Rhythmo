@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/colorDark"
+    tools:context="com.chatton.marina.rhythmowatch.MainActivity"
+    tools:deviceIds="wear_round">
+
+    <com.lukedeighton.wheelview.WheelView
+        android:id="@+id/wheelview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        app:rotatableWheelDrawable="false"
+        app:selectionAngle="90.0"
+        app:wheelColor="@color/colorElectricBlue"
+        app:wheelRadius="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RPM"
+            android:textColor="@android:color/holo_blue_bright"
+            android:shadowColor="@android:color/holo_blue_bright"
+            android:shadowRadius="7"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/display_rpm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@android:color/holo_blue_bright"
+            android:shadowColor="@android:color/holo_blue_bright"
+            android:shadowRadius="7"
+            android:textAlignment="center"/>
+
+        <ImageButton
+            android:id="@+id/on_off_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_start"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimary"/>
+    </LinearLayout>
+</FrameLayout>

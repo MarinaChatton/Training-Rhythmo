@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Rhythmo.iml" filepath="$PROJECT_DIR$/Rhythmo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/metronomelibrary/metronomelibrary.iml" filepath="$PROJECT_DIR$/metronomelibrary/metronomelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rhythmowatch/rhythmowatch.iml" filepath="$PROJECT_DIR$/rhythmowatch/rhythmowatch.iml" />
     </modules>
   </component>
 </project>
